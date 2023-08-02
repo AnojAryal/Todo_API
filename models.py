@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from database import Base
 from sqlalchemy.orm import relationship
 
@@ -12,6 +12,12 @@ class Todo(Base):
     description = Column(String)
     completed = Column(Boolean)
 
+    user_id = Column(Integer, ForeignKey("users.id"))
+    # Foreign key referencing the user who created the todos
+
+    creator = relationship("User", back_populates="blogs")
+    # Relationship to the User who created the todos
+
 
 # for user
 class User(Base):
@@ -21,3 +27,6 @@ class User(Base):
     name = Column(String)
     email = Column(String, unique=True, index=True)
     password = Column(String)
+
+    Todo = relationship("Blog", back_populates="creator")
+    # Relationship to the todo created by the user
