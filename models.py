@@ -10,12 +10,12 @@ class Todo(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
     description = Column(String)
-    completed = Column(Boolean)
+    completed = Column(Boolean, default=False)
 
     user_id = Column(Integer, ForeignKey("users.id"))
     # Foreign key referencing the user who created the todos
 
-    creator = relationship("User", back_populates="blogs")
+    creator = relationship("User", back_populates="Todo")
     # Relationship to the User who created the todos
 
 
@@ -28,5 +28,5 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     password = Column(String)
 
-    Todo = relationship("Blog", back_populates="creator")
+    Todo = relationship("Todo", back_populates="creator")
     # Relationship to the todo created by the user

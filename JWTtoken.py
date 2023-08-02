@@ -1,12 +1,16 @@
 from datetime import datetime, timedelta
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-import schemas
 
 
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
 # Algorithm used for JWT token encoding and decoding
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
 def create_access_token(data: dict):
@@ -18,15 +22,22 @@ def create_access_token(data: dict):
     return encoded_jwt
 
 
-def verify_token(token: str, credentials_exception):
+def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
-        # Decoding the JWT token using the secret key and specified algorithm
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         email: str = payload.get("sub")
-        # raising an exception to indicate invalid credentials if email is not present in playload
-        if email is None:
-            raise credentials_exception
-        # Creating a TokenData object using the extracted email
-        token_data = schemas.TokenData(email=email)
+        id: int = payload.get("id")
+        if email is None or id is None:
+            get_user_exception()
+        return {"username": email, "id": id}
     except JWTError:
-        raise credentials_exception
+        raise get_user_exception()
+
+
+def get_user_exception():
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not valid credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    return credentials_exception
