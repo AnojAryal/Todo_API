@@ -37,8 +37,8 @@ def delete_todo(id, db: Session = Depends(get_db)):
 # update the selected id
 @app.put("/todo/{id}", status_code=status.HTTP_202_ACCEPTED, tags=["Todo"])
 def update_todo(id, todo: schemas.Todo, db: Session = Depends(get_db)):
-    existing_todo = db.query(models.Todo).filter(models.Todo.id == id)
-    if not existing_todo.first():
+    existing_todo = db.query(models.Todo).filter(models.Todo.id == id).first()
+    if not existing_todo:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Todo with ID {id} not found"
         )
@@ -47,7 +47,7 @@ def update_todo(id, todo: schemas.Todo, db: Session = Depends(get_db)):
     existing_todo.description = todo.description
 
     db.commit()
-    return "Updated Succssfully"
+    return "Updated Successfully"
 
 
 # get all todo items
