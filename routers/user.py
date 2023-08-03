@@ -7,6 +7,7 @@ router = APIRouter(prefix="/users", tags=["Users"])
 get_db = database.get_db
 
 
+# creating the user
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_user(user: schemas.User, db: Session = Depends(get_db)):
     new_user = models.User(
@@ -18,6 +19,7 @@ def create_user(user: schemas.User, db: Session = Depends(get_db)):
     return new_user
 
 
+# get the user by id
 @router.get("/{id}")
 def get_user_by_id(id: int, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == id).first()

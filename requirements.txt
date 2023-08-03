@@ -8,4 +8,8 @@ passlib
 
 bcrypt
 
+python-jose
+
+python-multipart
+
 pyJWT
