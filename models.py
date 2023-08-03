@@ -25,7 +25,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
-    email = Column(String, unique=True, index=True)
+    username = Column(String, index=True)
     password = Column(String)
 
     Todo = relationship("Todo", back_populates="creator")

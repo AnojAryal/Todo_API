@@ -25,11 +25,11 @@ def create_access_token(data: dict):
 def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        email: str = payload.get("sub")
+        username: str = payload.get("sub")
         id: int = payload.get("id")
-        if email is None or id is None:
+        if username is None or id is None:
             get_user_exception()
-        return {"username": email, "id": id}
+        return {"username": username, "id": id}
     except JWTError:
         raise get_user_exception()
 

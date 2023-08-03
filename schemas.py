@@ -15,13 +15,13 @@ class Todo(TodoBase):
 
 class User(BaseModel):
     name: str
-    email: str
+    username: str
     password: str
 
 
 class Show_User(BaseModel):
     name: str
-    email: str
+    username: str
     blogs: List[Todo] = []
 
     class Config:
@@ -56,4 +56,4 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    email: Optional[str] = None
+    username: Optional[str] = None
