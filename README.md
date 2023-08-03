@@ -6,7 +6,7 @@ Task Todo is an efficient collection of API endpoints designed for task and to-d
 
 Access the live demo of Task Todo at: [https://todo-api-wc8c.onrender.com](https://todo-api-wc8c.onrender.com)
 
-##Test API
+## Test API
 
-Test the api with Swagger UI   -- /docs
-Test the api with Redoc        -- /redoc
+Test the api with Swagger UI   - /docs
+Test the api with Redoc        - /redoc
