@@ -237,6 +237,8 @@ def import_from_csv(
     csv_data = io.StringIO(decoded_file)
     reader = csv.DictReader(csv_data)
 
+    todos_to_create = []  # Collect todos in a list for bulk insertion
+
     for row in reader:
         todo_data = {
             "title": row["title"],
@@ -246,8 +248,9 @@ def import_from_csv(
             "user_id": user.get("id"),
         }
         todo = models.Todo(**todo_data)
-        db.add(todo)
+        todos_to_create.append(todo)
 
+    db.add_all(todos_to_create)  # Bulk insert all todos
     db.commit()
 
     return {"message": "CSV import successful"}
