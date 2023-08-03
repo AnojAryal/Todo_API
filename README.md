@@ -8,5 +8,5 @@ Access the live demo of Task Todo at: [https://todo-api-wc8c.onrender.com](https
 
 ## Test API
 
-Test the api with Swagger UI   - /docs
-Test the api with Redoc        - /redoc
+- `/docs` - Test the api with Swagger UI
+- `/redoc` - Test api with Redoc
