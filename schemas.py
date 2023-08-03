@@ -38,6 +38,13 @@ class showTodo(BaseModel):
         orm_mode = True  # This allows the model to work  with ORMs
 
 
+class TodoItem(BaseModel):
+    id: int
+    title: str
+    description: str
+    completed: bool
+
+
 class Login(BaseModel):
     username: str
     password: str
